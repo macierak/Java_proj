@@ -26,7 +26,7 @@ public class SecurityController extends WebSecurityConfigurerAdapter{
             .antMatchers("/klient/**").hasAnyAuthority("Employee", "Administrator", "Boss", "Manager", "User")
             .anyRequest().permitAll()
             .and()
-            .formLogin().loginPage("/login").permitAll()
+            .formLogin().loginPage("/zaloguj").permitAll()
             .and()
             .csrf().disable();
     }

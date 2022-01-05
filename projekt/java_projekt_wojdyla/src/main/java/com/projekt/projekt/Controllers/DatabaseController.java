@@ -11,7 +11,7 @@ import com.projekt.projekt.databases.ReservationDB;
 import com.projekt.projekt.databases.RoomDB;
 import com.projekt.projekt.databases.SeanceDB;
 import com.projekt.projekt.databases.UserDB;
-
+import com.projekt.projekt.tables.Seance;
 import com.projekt.projekt.tables.User;
 
 
@@ -43,19 +43,20 @@ public class DatabaseController {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         return userDB.findFirstByLoginAndHasło(login, encoder.encode(haslo));
     }
-    public List<String> getThreeSoonestSeances(){
-        List<String> seances = seanceDB.findByQuery(PageRequest.of(0, 3));
-        List<String> parsedResults = new ArrayList<>();
-        for (String string : seances) {
+    public List<Seance> getWeeklySeances(){
+        List<Seance> seances = seanceDB.findByQuery();
+        List<Seance> parsedResults = new ArrayList<>();
+        for (Seance seance : seances) {
             
-            if(string.contains("(")){
-                string = string.substring(0, string.indexOf("(")-1);
+            if(seance.getNazwa_filmu().contains("(")){
+                seance.setNazwa_filmu(seance.getNazwa_filmu().substring(0, seance.getNazwa_filmu().indexOf("(")-1)); 
             }
-            if (string.contains(",")){
-                string = string.split(",")[1] + " " + string.split(",")[0];
+            if (seance.getNazwa_filmu().contains(",")){
+                seance.setNazwa_filmu(seance.getNazwa_filmu().split(",")[1] + " " + seance.getNazwa_filmu().split(",")[0]);
             }
-            parsedResults.add(string);
+            parsedResults.add(seance);
         }
         return parsedResults;
     }
+
 }

@@ -1,13 +1,13 @@
 package com.projekt.projekt.Controllers;
 
-
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Map;
+import java.util.Map.Entry;
 
 import com.projekt.projekt.MovieInfo;
 import com.projekt.projekt.Receivers.loginData;
-import com.projekt.projekt.tables.Reservation;
 import com.projekt.projekt.tables.Seance;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,53 +18,37 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class WebController{
-
-
-    
     @Autowired
     DatabaseController db;
 
 
-    @GetMapping("/main")
+    @GetMapping("/")
     public String index(Model model){
-
-        System.out.println("11");
-        List<String> soonestSeances = db.getThreeSoonestSeances(); 
-
-        List<String> moviePosters = new ArrayList<>();
-        for (String seance : soonestSeances) {
-            
-            String link = new MovieInfo(seance).getImg();
-            try{
-                moviePosters.add((link.substring(1, link.length()-1)));
-            }catch(StringIndexOutOfBoundsException e){
-                System.out.print(link);
-                
-            }
-            
-        }
-        System.out.println("13");
-        model.addAttribute("moviePoster", moviePosters);
+        
         return "start";
     }
 
-
-    @GetMapping("/loginpage")
-    public String login(Model model){
-
-        return "login";
+    @GetMapping("/zaloguj")
+    public String zaloguj(Model model){
+        model.addAttribute("loginRec", new loginData());
+        return "loginpage";
     }
 
-    @PostMapping("/login")
-    public String login(Model model, loginData data){
-       
-        return "/index";
+    @GetMapping("/panel")
+    public String panel(Model model){
+
+        return "panel";
     }
-
-    @PostMapping("/zarezerwuj")
-    public String postReservation(Model model, Reservation reservation){
-
-        return "reservationSuccess";
+    @GetMapping("/repertuar")
+    public String repertuar(Model model){
+        List<Seance> films = db.getWeeklySeances();
+        List<Entry<Seance, String>> seances = new ArrayList<>();
+        for (Seance seance : films) {
+            MovieInfo mi = new MovieInfo(seance.getNazwa_filmu());
+            Map.Entry<Seance, String> entry = new AbstractMap.SimpleEntry<Seance, String>(seance, mi.getPlot());
+            seances.add(entry);
+        }
+        model.addAttribute("WeeklySeances", seances);
+        return "repertuar";
     }
-
 }
