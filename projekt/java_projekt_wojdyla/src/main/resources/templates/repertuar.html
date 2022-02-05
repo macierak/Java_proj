@@ -6,20 +6,216 @@
     <meta name="viewport" content="width=s, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/b34d66382a.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
    
 </head>
-<body >
-    <h1>Repertuar filmów na tydzień</h1>
-    <ul th:object="${WeeklySeances}" th:each="Seance : ${WeeklySeances}">
-        <li th:text="${Seance.getKey().nazwa_filmu} + ' - ' +${Seance.getKey().data}">
-        <li th:text="${Seance.getValue()}" />
-        <li>  <button class="btn">Zarezerwuj</button>   </li>
+<style>
+  .css-selector {
+    background: linear-gradient(219deg, #4954f7, #96a73b, #b1b9b7);
+    background-size: 600% 600%;
 
+    -webkit-animation: AnimationName 0s ease infinite;
+    -moz-animation: AnimationName 0s ease infinite;
+    -o-animation: AnimationName 0s ease infinite;
+    animation: AnimationName 0s ease infinite;
+}
 
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 42%}
+    50%{background-position:100% 59%}
+    100%{background-position:0% 42%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 42%}
+    50%{background-position:100% 59%}
+    100%{background-position:0% 42%}
+}
+@-o-keyframes AnimationName {
+    0%{background-position:0% 42%}
+    50%{background-position:100% 59%}
+    100%{background-position:0% 42%}
+}
+@keyframes AnimationName {
+    0%{background-position:0% 42%}
+    50%{background-position:100% 59%}
+    100%{background-position:0% 42%}
+}
+</style>
+<body class="css-selector">
+  
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">    <div class="modal-dialog modal-dialog-centered">     <div class="modal-content">     
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Kino Selene - Logowanie</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body" >
+      <form  method="POST" th:object="${loginRec}" th:action="@{/zaloguj}">
+        <h1>Zaloguj się:</h1>
+        <small class="form-text">Login:  <input class="form-control" th:field="*{username}"></small>
+        <small class="form-text">Hasło:  <input class="form-control" th:field="*{password}"></small>
+
+        <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Nie mam konta</a>
+        <br><br><br>
+        <button class="btn btn-primary" type="submit">Zaloguj</button>
         
-    </ul>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cofnij</button>
+      
+      
+      
+    </div></div></div>
+  </div>
+
+  <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">    <div class="modal-dialog modal-dialog-centered">     <div class="modal-content">     
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Kino Selene - Rejestracja</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body" >
+      <form  method="POST" th:object="${regRec}" th:action="@{/register}">
+        <h1>Zarejestruj się:</h1>
+        <small class="form-text">Login:  <input class="form-control" th:field="*{login}"></small>
+        <small class="form-text">Hasło:  <input class="form-control" th:field="*{hasło}"></small>
+        <small class="form-text">Email:  <input class="form-control" type="email" pattern=".@.\." th:field="*{email}"></small>
+
+        <br><br><br>
+        <button class="btn btn-primary" type="submit">Zarejestruj</button>
+        
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cofnij</button>
+      
+      
+      
+    </div></div></div>
+  </div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-dark mx-5 fixed-top">
+    <div style="width: 5%;"></div>
+    <img src="/graphics/Bez nazwy.png" style="width: 6%; height:6%;"><h1 style="color: aliceblue;">Kino Selene</h1>
+    <div class="mx-auto"></div>
+      <a class="nav-link " href="../" id="MenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+        <i class="fa fa-home" aria-hidden="true"></i> Strona Główna
+      </a>
+      <a class="nav-link" href="/repertuar" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="true">
+        <i class="fa fa-calendar" aria-hidden="true"></i> Repertuar
+      </a>
+      <div sec:authorize="isAuthenticated()">
+        </i><a href="/panel" class="nav-link"> <i class="fa fa-user-circle" aria-hidden="true"></i> Panel</a>
+      </div>
+      <div sec:authorize="hasAnyAuthority('Employee', 'Administrator', 'Boss', 'Manager')"> 
+        </i><a class="nav-link"  aria-disabled="false" href="/workerpanel"> <i class="fa fa-user" aria-hidden="true"></i> Panel pracownika</a>
+      </div>
+      <div sec:authorize="!isAuthenticated()">
+        <button  class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Zaloguj</button>
+      </div>
+      <div sec:authorize="isAuthenticated()">
+        <a href="/logout" class="nav-link"> <i class="fa fa-ban" aria-hidden="true"></i> Wyloguj</a>
+      </div>
+      <div style="width: 5%;"></div>
+  </nav>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mx-5">
+    <div style="width: 5%;"></div>
+    <img src="/graphics/Bez nazwy.png" style="width: 6%; height:6%;"><h1 style="color: aliceblue;">Kino Selene</h1>
+    
+  </nav>
+      
+    </nav>
+
+
+      <div class="">
+        <h1 class="" style="text-align: center;">Spektakle w tym tygodniu</h1>
+        <div class="m-5  row ">
+    
+          <div class="col-lg-3 col-sm-6 d-flex align-items-stretch" th:object="${WeeklySeances}" th:each="Seance : ${WeeklySeances}">
+    
+            <div class="card  m-2 " style="text-align: center;" >
+    
+              <img class="card-img-top" th:src="${Seance.getValue().getValue()}" >
+              <div class="card-body" >
+                  <h2 class="card-title" th:text="${Seance.getKey().nazwa_filmu} + '  ' +${Seance.getKey().data}"></h2>
+                  <h4 class="card-text" th:text="${Seance.getValue().getKey()}"></h4>
+              </div>
+              <div class="d-flex card-footer " sec:authorize="isAuthenticated()">
+                <a th:href="@{/reserve?movie={id}(id=${Seance.getKey().ID})}"><button class="btn align-items-end align-self-end">Zarezerwuj</button></a>
+              </div>
+              <div class="d-flex card-footer " sec:authorize="!isAuthenticated()">
+                <button class="btn align-items-end align-self-end" data-bs-toggle="modal" data-bs-target="#loginModal">Zaloguj się, żeby zerezerwować</button>
+              </div>
+              
+          
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="">
+        <h1 class="" style="text-align: center;">Spektakle w przyszłym tygodniu</h1>
+        <div class="m-5  row ">
+    
+          <div class="col-lg-3 col-sm-6 d-flex align-items-stretch" th:object="${nextWeekSeances}" th:each="Seance : ${nextWeekSeances}">
+    
+            <div class="card  m-2 " style="text-align: center;" >
+    
+              <img class="card-img-top" th:src="${Seance.getValue().getValue()}" >
+              <div class="card-body" >
+                  <h2 class="card-title" th:text="${Seance.getKey().nazwa_filmu} + '  ' +${Seance.getKey().data}"></h2>
+                  <h4 class="card-text" th:text="${Seance.getValue().getKey()}"></h4>
+              </div>
+              <div class="d-flex card-footer " sec:authorize="isAuthenticated()">
+                <a th:href="@{/reserve?movie={id}(id=${Seance.getKey().ID})}"><button class="btn align-items-end align-self-end">Zarezerwuj</button></a>
+              </div>
+              <div class="d-flex card-footer " sec:authorize="!isAuthenticated()">
+                <button class="btn align-items-end align-self-end" data-bs-toggle="modal" data-bs-target="#loginModal">Zaloguj się, żeby zerezerwować</button>
+              </div>
+              
+          
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer class="bg-light text-center text-lg-start ">
+        <div class="container p-4">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            Author: Maciej Wojdyła
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            Aplikacje Bazodanowe w języku Java
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0 ">
+                    <ul class="list-unstyled mb-0">
+                        
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0 ">
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                           <a class="text-decoration-none" href="https://github.com/macierak"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-github" viewBox="0 0 16 16">  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg> Github</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        
+        </div>
+        
+
+    </footer>
 </body>
 </html>

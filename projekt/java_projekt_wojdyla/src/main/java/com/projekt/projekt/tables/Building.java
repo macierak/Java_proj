@@ -13,6 +13,15 @@ public class Building {
     @GeneratedValue(strategy = GenerationType.AUTO)
     int ID;
     String Nazwa, Miasto, Ulica, nr_bud;
+    Building(){}
+    public Building(int id, String Nazwa,String Miasto,String Ulica,String nr_bud){
+        this.ID     =id;
+        this.Nazwa =Nazwa;
+        this.Miasto =Miasto;
+        this.Ulica =Ulica;
+        this.nr_bud =nr_bud;
+    }
+
 
     public int getID() {
         return ID;

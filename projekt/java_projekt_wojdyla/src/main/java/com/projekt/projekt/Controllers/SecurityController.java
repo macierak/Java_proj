@@ -20,10 +20,11 @@ public class SecurityController extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-            .antMatchers("/panel/**").hasAnyAuthority("Employee", "Administrator", "Boss", "Manager")
-            .antMatchers("/panel/administrator/**").hasAnyAuthority("Administrator", "Boss")
-            .antMatchers("/panel/manager/**").hasAnyAuthority("Administrator", "Boss", "Manager")
-            .antMatchers("/klient/**").hasAnyAuthority("Employee", "Administrator", "Boss", "Manager", "User")
+            .antMatchers("/workerpanel/**").hasAnyAuthority("Employee", "Administrator", "Boss", "Manager")
+            .antMatchers("/workerpanel/administrator/**").hasAnyAuthority("Administrator", "Boss")
+            .antMatchers("/workerpanel/manager/**").hasAnyAuthority("Administrator", "Boss", "Manager")
+            .antMatchers("/panel/**").hasAnyAuthority("Employee", "Administrator", "Boss", "Manager", "User")
+            .antMatchers("/reserve").hasAnyAuthority("Employee", "Administrator", "Boss", "Manager", "User")
             .anyRequest().permitAll()
             .and()
             .formLogin().loginPage("/zaloguj").permitAll()

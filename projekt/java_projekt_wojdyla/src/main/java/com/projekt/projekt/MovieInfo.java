@@ -10,6 +10,8 @@ import java.net.URL;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import Exceptions.MovieNotFoundException;
+
 
 
 public class MovieInfo {
@@ -23,7 +25,7 @@ public class MovieInfo {
     }
 
 
-    private JsonNode sendReq(){
+    private JsonNode sendReq() throws MovieNotFoundException{
         URL url = null;
         try{
             url = new URL("http://www.omdbapi.com/?t="+title+"&apikey=977e1980");
@@ -33,7 +35,9 @@ public class MovieInfo {
 
             ObjectMapper mapper = new ObjectMapper();
             JsonNode info = mapper.readTree(responseStream);
-            
+            if(info.path("Response").toString().equals("False")){
+                throw new MovieNotFoundException("Nie znaleziono filmu");
+            }
             return info;
         }catch(MalformedURLException e){
             e.printStackTrace();
@@ -45,14 +49,35 @@ public class MovieInfo {
     }
 
     public String getImg(){
-        JsonNode movie = sendReq();
         
-        return movie.path("Poster").toString();
+        //Ze względu na prawa autorkie, nie mogę używać plakatów filmów
+        //Jednakże ta funkcja zwróci plakat
+        //try{
+        //    JsonNode movie = sendReq();
+        //    String poster = movie.path("Poster").toString();
+        //    return poster.substring(1, poster.length()-1);
+        //}catch(MovieNotFoundException e){
+        //    e.printStackTrace();
+        //    return "https://via.placeholder.com/800x400?text=Plakat+niedostępny";
+        //}
+         
+        
+        
+        return "https://via.placeholder.com/800x400?text=Plakat+niedostępny";
     }
     public String getPlot(){
-        JsonNode movie = sendReq();
+        try{
+            JsonNode movie = sendReq();
+            String plot = movie.path("Plot").toString();
+    
+            return plot.substring(1, plot.length()-1);
+        }catch( MovieNotFoundException e){
+            return e.getMessage();
+        }
+        catch(NullPointerException e){
+            return "Opis niedostępny";
+        }
         
-        return movie.path("Plot").toString();
     }
 
     //public static void main(String[] args) {

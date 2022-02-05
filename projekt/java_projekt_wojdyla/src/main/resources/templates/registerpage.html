@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mx-5 fixed-top">
+        <div style="width: 5%;"></div>
+        <h1>Kino Selene</h1>
+        <div class="mx-auto"></div>
+          <a class="nav-link " href="../" id="MenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+            Strona Główna
+          </a>
+          <a class="nav-link" href="/repertuar" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="true">
+            Repertuar
+          </a>
+          <div sec:authorize="isAuthenticated()">
+            <a href="/panel" class="nav-link">Panel</a>
+          </div>
+          <div sec:authorize="hasAnyAuthority('Employee', 'Administrator', 'Boss', 'Manager')"> 
+            <a class="nav-link"  aria-disabled="false" href="/workerpanel">Panel pracownika</a>
+          </div>
+          <div sec:authorize="!isAuthenticated()">
+            <button  class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Zaloguj</button>
+          </div>
+          <div sec:authorize="isAuthenticated()">
+            <a href="/logout" class="nav-link">Wyloguj</a>
+          </div>
+          <div style="width: 5%;"></div>
+      </nav>
+  
+      <nav class="navbar navbar-expand-lg navbar-light bg-light mx-5">
+        <div style="width: 5%;"></div>
+        <h1>Kino Selene</h1>
+        
+      </nav>
+</body>
+</html>

@@ -24,6 +24,15 @@ public class Seance {
     @ManyToMany
     Set<Employee> Pracownik;
 
+    public Seance(){}
+
+    public Seance(long id, String data, String nazwa, Room sala){
+        this.ID = (int) id;
+        this.data = data;
+        this.nazwa_filmu = nazwa;
+        this.sala = sala;
+    }
+
     public String getNazwa_filmu() {
         return nazwa_filmu;
     }

@@ -24,9 +24,28 @@ public class Reservation {
     
     int rząd;
     int siedzenie;
+    Boolean paid = false;
 
+   
+    public Reservation(int id, User konto, Seance seance, int rzad, int siedzenie, Boolean paid){
+        this._ID = id;
+        this.konto = konto;
+        this.seans = seance;
+        this.rząd = rzad;
+        this.siedzenie = siedzenie;
+        this.paid = paid;
+    }
     
    
+    public Reservation(){
+        paid = false;
+    }
+    public void setPaid(Boolean paid) {
+        this.paid = paid;
+    }
+    public boolean getPaid(){
+        return paid;
+    }
     public int get_ID() {
         return _ID;
     }

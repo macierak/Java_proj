@@ -9,4 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BuildingDB extends JpaRepository<Building, Integer> {
 
+    Building findFirstByOrderByIDDesc();
+
 }

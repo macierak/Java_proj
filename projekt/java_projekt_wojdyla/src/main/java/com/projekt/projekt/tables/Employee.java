@@ -21,7 +21,13 @@ public class Employee {
     User konto;
     String imie;
     String Nazwisko;
-
+    Employee(){}
+    public Employee(long id, String imie, String nazwisko, User konto){
+        this.imie = imie;
+        this.Nazwisko = nazwisko;
+        this.konto = konto;
+        this._ID = (int) id;
+    }
     public String getImie() {
         return imie;
     }

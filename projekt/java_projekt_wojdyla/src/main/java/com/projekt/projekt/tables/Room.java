@@ -18,7 +18,13 @@ public class Room {
     Building budynek;
 
     int nr_sali, il_siedzen;
-
+    Room(){}
+    public Room(int id, int nrsal, int siedz, Building bud){
+        this.ID = id;
+        this.nr_sali = nrsal;
+        this.il_siedzen = siedz;
+        this.budynek = bud;
+    }
     public int getIl_siedzen() {
         return il_siedzen;
     }

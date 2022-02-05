@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/b34d66382a.js" crossorigin="anonymous"></script>    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</head>
+<style>
+  .css-selector {
+    background: linear-gradient(219deg, #4954f7, #96a73b, #b1b9b7);
+    background-size: 600% 600%;
+
+    -webkit-animation: AnimationName 0s ease infinite;
+    -moz-animation: AnimationName 0s ease infinite;
+    -o-animation: AnimationName 0s ease infinite;
+    animation: AnimationName 0s ease infinite;
+}
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 42%}
+    50%{background-position:100% 59%}
+    100%{background-position:0% 42%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 42%}
+    50%{background-position:100% 59%}
+    100%{background-position:0% 42%}
+}
+@-o-keyframes AnimationName {
+    0%{background-position:0% 42%}
+    50%{background-position:100% 59%}
+    100%{background-position:0% 42%}
+}
+@keyframes AnimationName {
+    0%{background-position:0% 42%}
+    50%{background-position:100% 59%}
+    100%{background-position:0% 42%}
+}
+</style>
+<body class="css-selector">
+        
+    <!-- Modal -->
+    <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Dodaj Seans</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="newMovieForm" method="post" action="/addmovie" th:object="${movieRec}">
+                        Nazwa filmu <input th:field="*{nazwa_filmu}"> <br>
+                        Data <input type="date" th:field="*{data}"> <br>
+                        Sala    <select th:field="*{sala}" th:object="${movieRec}"> 
+                                    <option th:each="room : ${sale}" th:value="${room.ID}" th:text="${room.budynek.nazwa} + ' | ' + ${room.nr_sali}"></option>
+                                </select>
+                        
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" form="newMovieForm">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <!-- Modal -->
+    <div class="modal fade" id="modelId1" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Sprzedaj bilet</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:object="${rec}" method="post" action="/reservepaid">  
+                       
+                        <select th:field="*{id}" th:object="${rec}"  >
+                            <option  th:each="res : ${NotPaid}"   th:value="${res._ID}" th:text="${res._ID} + ' | ' + ${res.seans.nazwa_filmu}+ ' | ' + ${res.konto.login}"></option>
+                        </select>
+                        <input type="submit" class="btn btn-primary">        
+                        
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    <!-- Modal -->
+    <div class="modal fade" id="modelId2" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Sprzedaj bilet</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:object="${movieRec}" method="post" action="/markformovie">  
+                    
+                        <select th:field="*{id}" th:object="${movieRec}"  >
+                            <option  th:each="movie : ${nextSeances}"   th:value="${movie.ID}" th:text="${movie.data} + ' | ' + ${movie.nazwa_filmu}"></option>
+                        </select>
+                        <input type="submit" class="btn btn-primary">        
+                        
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-dark mx-5 fixed-top">
+      <div style="width: 5%;"></div>
+        <img src="/graphics/Bez nazwy.png" style="width: 5%; height: 5%;"><h1 style="color: azure;">Kino Selene</h1>
+      <div class="mx-auto"></div>
+        <div sec:authorize="hasAnyAuthority('Employee', 'Administrator', 'Boss', 'Manager')"> 
+          <a class="nav-link"  aria-disabled="false" href="/"> <i class="fa fa-home" aria-hidden="true"></i> Strona Główna</a>
+        </div>
+        <div sec:authorize="hasAnyAuthority( 'Administrator', 'Boss', 'Manager')"> 
+            <a class="nav-link"  aria-disabled="false" href="/workerpanel/manager"><i class="fa fa-user-circle" aria-hidden="true"></i> Panel Menadżera</a>
+        </div>
+        <div sec:authorize="hasAnyAuthority( 'Administrator', 'Boss')"> 
+            <a class="nav-link"  aria-disabled="false" href="/workerpanel/administrator"><i class="fa fa-user-secret" aria-hidden="true"></i> Panel Administratora</a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+          <a href="/logout" class="nav-link"><i class="fa fa-ban" aria-hidden="true"></i> Wyloguj</a>
+        </div>
+        <div style="width: 5%;"></div>
+    </nav>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mx-5">
+      <div style="width: 5%;"></div>
+      <h1>Kino Selene</h1>
+      
+    </nav>
+
+
+    <div class=""> 
+        <div class="mt-5 " style="margin-left:5%; margin-right: 5%; display: flex; justify-content: center; flex-wrap: wrap; gap: 1%; row-gap: 1%;">
+            <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#modelId">
+                Dodaj film
+            </button>
+            <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#modelId1">
+                Sprzedaj bilet
+            </button>
+            <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#modelId2">
+                Oznacz się do obsługi filmu
+            </button>
+        </div>
+    </div>
+    
+
+
+    
+      
+</body>
+</html>
