@@ -196,7 +196,7 @@ public class WebController{
         db.reservationsDb.delete(res);
         
         model.addAttribute("receiver", new reservationRec());
-        return "/panel";
+        return "redirect:/panel";
     }
 
     //------------- Staff GET controllers ----------------------------------------------------------------
