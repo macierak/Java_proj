@@ -18,7 +18,7 @@
     -webkit-animation: AnimationName 0s ease infinite;
     -moz-animation: AnimationName 0s ease infinite;
     -o-animation: AnimationName 0s ease infinite;
-    animation: AnimationName 0s ease infinite;
+    animation: AnimationName 10s ease infinite;
 }
 
 @-webkit-keyframes AnimationName {
@@ -111,7 +111,7 @@
       <h1 class="text-center">Rezerwacje</h1>
       <div id="rezerwacje"style="margin-left: 5%; margin-right: 5%">
           <div th:each="res : ${reservations}">
-            <div  class="bg-light">
+            <div  class="bg-light" style="background-image: radial-gradient(#212121 1%, #ffffff 20%); background-position: 0 0, 5px 5px; background-size: 5px 5px;">
               <h3 style="width: fit-content; float: left;" th:text="'Tytuł: ' + ${res.getKey().seans.nazwa_filmu}" >  </h3> 
               <div th:if="${!res.getKey().paid}">
                 <button th:attr="onclick=|changeValues('${res.getKey()._ID}')|" style="width: fit-content; float: right;"class="btn btn-primary"data-bs-toggle="modal" data-bs-target="#modelId">Odwołaj Rezerwację</button>

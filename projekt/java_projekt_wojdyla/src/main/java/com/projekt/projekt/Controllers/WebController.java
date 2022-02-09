@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -380,4 +381,10 @@ public class WebController{
         return "redirect:/workerpanel/manager"; 
 
     }
+    @ExceptionHandler(Exception.class)
+    public String error(Model model){
+        return "redirect:/";
+    }
+
+
 } 

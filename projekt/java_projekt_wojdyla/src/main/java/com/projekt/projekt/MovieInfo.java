@@ -73,6 +73,8 @@ public class MovieInfo {
             return plot.substring(1, plot.length()-1);
         }catch( MovieNotFoundException e){
             return e.getMessage();
+        }catch(StringIndexOutOfBoundsException e){
+            return "Opis niedostępny";
         }
         catch(NullPointerException e){
             return "Opis niedostępny";

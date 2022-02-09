@@ -14,13 +14,13 @@
 </head>
 <style>
   .css-selector {
-    background: linear-gradient(219deg, #4954f7, #96a73b, #b1b9b7);
+    background: linear-gradient(219deg, #4954f7, #449992, #b1b9b7);
     background-size: 600% 600%;
 
     -webkit-animation: AnimationName 0s ease infinite;
     -moz-animation: AnimationName 0s ease infinite;
     -o-animation: AnimationName 0s ease infinite;
-    animation: AnimationName 0s ease infinite;
+    animation: AnimationName 10s ease infinite;
 }
 
 @-webkit-keyframes AnimationName {
@@ -43,6 +43,13 @@
     50%{background-position:100% 59%}
     100%{background-position:0% 42%}
 }
+</style>
+<style>
+  .pattern{
+    background-color: #ffffff;
+    opacity: 0.3;
+    background: repeating-linear-gradient( 45deg, #000000, #000000 2px, #ffffff 2px, #ffffff 10px );
+  }
 </style>
 <body class="css-selector">
   
@@ -145,7 +152,7 @@
               <div class="d-flex card-footer " sec:authorize="isAuthenticated()">
                 <a th:href="@{/reserve?movie={id}(id=${Seance.getKey().ID})}"><button class="btn align-items-end align-self-end">Zarezerwuj</button></a>
               </div>
-              <div class="d-flex card-footer " sec:authorize="!isAuthenticated()">
+              <div class="d-flex card-footer pattern" sec:authorize="!isAuthenticated()">
                 <button class="btn align-items-end align-self-end" data-bs-toggle="modal" data-bs-target="#loginModal">Zaloguj się, żeby zerezerwować</button>
               </div>
               
@@ -172,7 +179,7 @@
               <div class="d-flex card-footer " sec:authorize="isAuthenticated()">
                 <a th:href="@{/reserve?movie={id}(id=${Seance.getKey().ID})}"><button class="btn align-items-end align-self-end">Zarezerwuj</button></a>
               </div>
-              <div class="d-flex card-footer " sec:authorize="!isAuthenticated()">
+              <div class="d-flex card-footer pattern" sec:authorize="!isAuthenticated()">
                 <button class="btn align-items-end align-self-end" data-bs-toggle="modal" data-bs-target="#loginModal">Zaloguj się, żeby zerezerwować</button>
               </div>
               
